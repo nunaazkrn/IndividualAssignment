@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+ /* alternative port */
 #define PORT 6969
 #define LENGTH 512
 

@@ -30,12 +30,15 @@ int main(int argc, char *argv[])
   char revbuf[LENGTH];
   struct sockaddr_in server;
 
+
         /* Get the Socket file descriptor */
         if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
         {
-                fprintf(stderr, "ERROR: Failed to obtain Socket Descriptor! (er$
+                fprintf(stderr, "ERROR: Failed to obtain Socket Descriptor! (errno = %d)\n",errno);
                 exit(1);
         }
+
+
 
         /* Fill the socket address struct */
         server.sin_family = AF_INET;
@@ -44,11 +47,11 @@ int main(int argc, char *argv[])
         bzero(&(server.sin_zero), 8);
 
         /* Try to connect the remote */
-        if (connect(sockfd, (struct sockaddr *)&server, sizeof(struct sockaddr)$
+        if (connect(sockfd, (struct sockaddr *)&server, sizeof(struct sockaddr)) == -1)
         {
-                fprintf(stderr, "ERROR: Failed to connect to the host! (errno =$
+                fprintf(stderr, "ERROR: Failed to connect to the host! (errno = %d)\n",errno);
                 exit(1);
-         }
+        }
         else
                 printf("[Client] Connected to server at port %d...ok!\n", PORT);
 
@@ -84,11 +87,11 @@ int main(int argc, char *argv[])
 
                 bzero(sdbuf, LENGTH);
                 int fs_block_sz;
-                while((fs_block_sz = fread(sdbuf, sizeof(char), LENGTH, fs)) > $
+                while((fs_block_sz = fread(sdbuf, sizeof(char), LENGTH, fs)) > 0)
                 {
                     if(send(sockfd, sdbuf, fs_block_sz, 0) < 0)
                     {
-                        fprintf(stderr, "ERROR: Failed to send file %s. (errno $
+                        fprintf(stderr, "ERROR: Failed to send file %s. (errno = %d)\n", filename, errno);
                         break;
                     }
                     bzero(sdbuf, LENGTH);
@@ -98,7 +101,7 @@ int main(int argc, char *argv[])
         pclose;
         //printf("[Client] Connection lost.\n");
         return (0);
-  }
+}
 
 
         

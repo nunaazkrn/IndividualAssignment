@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
         FILE *fdr,*fdw;
         char filename[25],ch,sendline[100];
         int op;
-        printf("HYE Server! i want to send a file to you");
+        printf("HYE Server! client want to send a file to you");
         printf("\nEnter file name:");
         scanf("%s",filename);
         

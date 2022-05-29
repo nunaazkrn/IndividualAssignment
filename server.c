@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+ /* alternative port for tftp=port69 */
 #define PORT 6969
 #define BACKLOG 5
 #define LENGTH 512
@@ -27,7 +28,7 @@ int main ()
         int sockfd;
         int nsockfd;
         int num;
- exit(1);
+        exit(1);
 }
 
 int main ()
@@ -37,19 +38,27 @@ int main ()
         int nsockfd;
         int num;
         int sin_size;
-        struct sockaddr_in client; /* client addr */
-        struct sockaddr_in server; /* server addr */
-        char revbuf[LENGTH]; // Receiver buffer
+        
+        /* define client addr */
+        struct sockaddr_in client;
+        /* define server addr */
+        struct sockaddr_in server; 
+        // Receiver buffer
+        char revbuf[LENGTH]; 
 
         /* Get the Socket file descriptor */
         if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1 )
-        {
+        {       
+                 /* socket funtion to make connection between client and server */
                 fprintf(stderr, "ERROR: Failed to obtain Socket Descriptor. (errno = %d)\n", errno);
                 exit(1);
-
-        struct sockaddr_in client; /* client addr */
-        struct sockaddr_in server; /* server addr */
-        char revbuf[LENGTH]; // Receiver buffer
+                
+        /* client addr */
+        struct sockaddr_in client;
+        /* server addr */
+        struct sockaddr_in server;
+        // Receiver buffer
+        char revbuf[LENGTH];
 
 
         /* Get the Socket file descriptor */
@@ -67,7 +76,7 @@ int main ()
         server.sin_addr.s_addr = INADDR_ANY; // AutoFill local address
         bzero(&(server.sin_zero), 8); // Flush the rest of struct
 
-        /* Bind a special Port */
+        /* Bind a special Port - bind socket to a particular address */
         if( bind(sockfd, (struct sockaddr*)&server, sizeof(struct sockaddr)) == -1 )
         {
                 fprintf(stderr, "ERROR: Failed to bind Port. (errno = %d)\n", errno);
